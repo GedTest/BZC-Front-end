@@ -1,0 +1,18 @@
+#calendar {
+    width: 50vw;
+    position: relative;
+    left: 20%;
+}
+
+.days {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.day {
+    width: 14.28%;
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
