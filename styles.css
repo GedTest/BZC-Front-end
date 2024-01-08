@@ -1,22 +1,53 @@
 #calendar {
-    width: 50vw;
-    position: relative;
-    left: 20%;
+    width: 35vw;
+    margin: 0 auto; 
+    display: flex;
+    flex-direction: column;
+
+    border: 3px solid beige;
 }
 
-.days {
+.container {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+    width: 100%;
 }
 
 .day {
     box-sizing: border-box;
-    padding: 10px;
-    text-align: center;
     border: 1px solid #ccc;
-    min-height: 3rem;
+    aspect-ratio: 1;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .empty {
     background-color: #eee;
+}
+
+.row {
+    display: flex;
+    width: 100%;
+}
+
+.row #monthYear {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10%;
+    white-space: nowrap;
+}
+
+.row button {
+    padding: 2% 4%;
+}
+
+.left {
+    margin-left: 10%;
+}
+.right {
+    margin-right: 10%;
 }
