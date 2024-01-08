@@ -1,9 +1,10 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {    
     const calendar = document.querySelector('#calendar');
     let currentDate = new Date();
-
-    const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth()+1, 0);
-    const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth()+1, 1);
+    
+    let currentMonth = 2;
+    const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth()+(currentMonth+1), 0);
+    const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth()+currentMonth, 1);
 
     const weekday = ["NE","PO","ÚT","ST","ČT","PÁ","SO"];
 
@@ -11,30 +12,40 @@ document.addEventListener('DOMContentLoaded', () => {
         const daysContainer = document.createElement('div');
         daysContainer.classList.add('days');
 
-
-        const rows = 5;
-        const cols = 7;
-        const gridCellCount = rows*cols;
-        const emptyCellCount = gridCellCount - lastDayOfMonth.getDate();
-
-        console.log(firstDayOfMonth.getDay());
-        console.log(weekday[firstDayOfMonth.getDay()]);
-
+        // header
         let weekdayCounter = 1;
         createCells(7).forEach(day => {
             day.innerText = weekday[weekdayCounter%7];
             weekdayCounter++;
             daysContainer.appendChild(day);
         });
+        
+                
+        
+        const rows = 6;
+        const cols = 7;
+        const gridCellCount = rows*cols;
+        const firstEmptyCellCount = (firstDayOfMonth.getDay() + 6) % 7;
 
+        console.log(firstDayOfMonth.getDay());
+        console.log(firstEmptyCellCount);
+        console.log(firstDayOfMonth)
 
-        createCells(emptyCellCount).forEach(day => {
+        createCells(firstEmptyCellCount).forEach(day => {
+            day.classList.add('empty');
             daysContainer.appendChild(day);
         });
 
         let counter = 1;
         createCells(lastDayOfMonth.getDate()).forEach(day => {
             day.innerText = counter++;
+            daysContainer.appendChild(day);
+        });
+
+
+        const c = gridCellCount - lastDayOfMonth.getDate() - firstEmptyCellCount;
+        createCells(c).forEach(day => {
+            day.classList.add('empty');
             daysContainer.appendChild(day);
         });
 

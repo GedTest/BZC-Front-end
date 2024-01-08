@@ -5,14 +5,18 @@
 }
 
 .days {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
 }
 
 .day {
-    width: 14.28%;
     box-sizing: border-box;
     padding: 10px;
     text-align: center;
     border: 1px solid #ccc;
+    min-height: 3rem;
+}
+
+.empty {
+    background-color: #eee;
 }
