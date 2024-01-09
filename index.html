@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="./css/styles.css">
     <title>Calendar</title>
 </head>
 <body>
     <div id="calendar">
         <div class="nav-row">
             <button class="left"><</button>
-            <div id="monthYear"></div>
+            <div id="month-year"></div>
             <button class="right">></button>
         </div>
         <div class="container"></div>
@@ -18,6 +18,10 @@
         <div class="event">
             <h4 id="title"></h4>
             <p id="date"></p>
+            <div>
+                <button id="change">Změnit</button>
+                <button id="delete">Odstranit</button>
+            </div>
         </div>
 
         <div class="form">
@@ -27,10 +31,9 @@
             </div>
             <div>
                 <button id="save">Uložit</button>
-                <button id="delete">Odstranit</button>
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script src="./script.js"></script>
 </body>
 </html>

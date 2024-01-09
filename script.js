@@ -1,18 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {    
-    const daysContainer = document.querySelector('.container');
-    let currentDate = new Date();
-    
+    const cellsContainer = document.querySelector('.container');
+    const currentDate = new Date();
+    const daysInWeek = 7;
+
     let currentMonth = currentDate.getMonth();
-
-
-    let lastDayOfMonth = 1;
-    let firstDayOfMonth = 30;
+    let firstDayOfMonth = 1;
+    let lastDayOfMonth = 30;
 
 
     function showCalendar() {
-        lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth()+(currentMonth+1), 0);
-        firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth()+currentMonth, 1);
-
+        firstDayOfMonth = new Date(currentDate.getFullYear(), currentMonth, 1);
+        lastDayOfMonth = new Date(currentDate.getFullYear(), currentMonth+1, 0);
 
         const months = [
             "Leden","Únor","Březen",
@@ -20,84 +18,72 @@ document.addEventListener('DOMContentLoaded', () => {
             "Červenec","Srpen","Září",
             "Říjen","Listopad","Prosinec"
         ];
-        const month = document.querySelector('#monthYear')
-        month.innerText = `${months[firstDayOfMonth.getMonth()]} ${firstDayOfMonth.getFullYear()}`;
 
+        const monthLabel = document.querySelector('#month-year');
+        monthLabel.innerText = `${months[firstDayOfMonth.getMonth()]} ${firstDayOfMonth.getFullYear()}`;
+        
         createCalendarGrid();
         colorCells();
     }
 
     function createCalendarGrid() {
-        daysContainer.innerHTML = '';
+        // clears previous calendar grid from HTML tree
+        cellsContainer.innerHTML = '';
         
         const weekday = ["NE","PO","ÚT","ST","ČT","PÁ","SO"];
 
-        // header
-        let weekdayCounter = 1;
-        createCells(weekday.length, 'header').forEach(day => {
-            day.innerText = weekday[weekdayCounter%7];
-            weekdayCounter++;
-            daysContainer.appendChild(day);
+        // create header row with name of weekdays
+        let weekdayIndex = 1;
+        createCells(daysInWeek, 'header').forEach(cell => {
+            cell.innerText = weekday[weekdayIndex % daysInWeek];
+            weekdayIndex++;
+            cellsContainer.appendChild(cell);
         });
-        
                 
+        // create empty cells before the first day of month
+        // is aligned with the corresponding weekday column
+        const emptyCellCount = (firstDayOfMonth.getDay() + daysInWeek-1) % daysInWeek;
+        createCells(emptyCellCount, 'empty').forEach(cell => {
+            cellsContainer.appendChild(cell);
+        });
         
-        const rows = 6;
-        const cols = weekday.length;
-        const gridCellCount = rows*cols;
-        const firstEmptyCellCount = (firstDayOfMonth.getDay() + 6) % 7;
-
-        createCells(firstEmptyCellCount, 'empty').forEach(day => {
-            daysContainer.appendChild(day);
-        });
-
+        // create main grid of days
         let counter = 1;
-        createCells(lastDayOfMonth.getDate(), 'day').forEach(day => {
-            day.innerText = counter++;
-            daysContainer.appendChild(day);
+        createCells(lastDayOfMonth.getDate(), 'day').forEach(cell => {
+            cell.innerText = counter++;
+            cellsContainer.appendChild(cell);
         });
-
-
-        const c = gridCellCount - lastDayOfMonth.getDate() - firstEmptyCellCount;
-        createCells(c, 'empty').forEach(day => {
-            daysContainer.appendChild(day);
+        
+        // create empty cells after the last day of month
+        // until the end of grid
+        const rows = 6;
+        const cols = daysInWeek;
+        const gridCellCount = rows*cols;
+        const lastEmptyCellCount = gridCellCount - lastDayOfMonth.getDate() - emptyCellCount;
+        createCells(lastEmptyCellCount, 'empty').forEach(cell => {
+            cellsContainer.appendChild(cell);
         });
     }
     
     function createCells(count, cssClass) {
         const cells = [];
         for(let i = 0; i < count; i++) {
-            const day = document.createElement('div');
-            day.classList.add(cssClass);
+            const cell = document.createElement('div');
+            cell.classList.add(cssClass);
+            
             if(cssClass === 'day') {
-                day.addEventListener('click', onCellClick);
+                cell.addEventListener('click', onCellClick);
             }
-            cells.push(day);
+            cells.push(cell);
         }
         return cells;
     }
+
     showCalendar();
 
-    const buttons = document.querySelectorAll('button');
-    buttons[0].addEventListener('click', () => onCalendarButtonClick(true));
-    buttons[1].addEventListener('click', () => onCalendarButtonClick(false));
-
-    function onCalendarButtonClick(isLeft) {
-        if(isLeft) { currentMonth--; }
-        else { currentMonth++; }
-        showCalendar();
-        hideEvent();
-    }
-
-
-
-
-
-
-    //==========
     let lastCell = null;
     let date = null;
-    //==========
+
     function onCellClick() {
         const day = this.innerText;
         const year = firstDayOfMonth.getFullYear();
@@ -105,79 +91,114 @@ document.addEventListener('DOMContentLoaded', () => {
         date = `${year}-${month}-${day}`;
         
         const event = localStorage.getItem(date);
-        
+
         if (event) {
-            showEvent(event, date);            
+            showEvent(event, date);
         }
         else {
             showForm(this);
         }
-        
+        lastCell = this;
     }
 
-    function hideEvent() {
-        const eventDiv = document.querySelector('.event');
-        eventDiv.classList.remove('active');
+    function showEvent(event, date) {
+        hideActiveElement('.form');
+
+        document.querySelector('.event').classList.add('active');
+        document.querySelector('#title').innerText = event;
+        document.querySelector('#date').innerText = formatDate(date);
     }
 
+    function hideActiveElement(element) {
+        document.querySelector(element).classList.remove('active');
+    }
+
+    function formatDate(date) {
+        const parts = date.split('-');
+        const dateString = {
+            year: parts[0],
+            month: parseInt(parts[1]) + 1,
+            day: parts[2]
+        }
+        return `${dateString.day}. ${dateString.month}. ${dateString.year}`;
+    }
+    
     function showForm(cell) {
+        hideActiveElement('.event');
         const form = document.querySelector('.form');
-        hideEvent();
 
         if(cell === lastCell) {
             if(form.classList.contains('active')) {
                 form.classList.remove('active');
-            } else {
-                form.classList.add('active');
+                return;
             }
-        } else {
-            lastCell = cell;
-            form.classList.add('active');
-            document.querySelector('#eventName').value = '';
         }
         
+        form.classList.add('active');
+        document.querySelector('#eventName').value = '';
     }
+
+    function colorCells() {
+        const year = firstDayOfMonth.getFullYear();
+        const month = firstDayOfMonth.getMonth();
+        const emptyCellCount = (firstDayOfMonth.getDay() + daysInWeek-1) % daysInWeek;
+        const indexOfFirstDayCell = daysInWeek + emptyCellCount;
+        let day = 1;
+
+        for (let i = 0; i < lastDayOfMonth.getDate(); i++) {
+            const date = `${year}-${month}-${i + 1}`;
+            const event = localStorage.getItem(date);
+
+            if (event) {
+                const dayElement = cellsContainer.children[i + indexOfFirstDayCell];
+                dayElement.classList.add('has-event');
+            }
+
+            if (currentDate.getDate() === i + 1) { day = i; }
+        }
+
+        // add a cell pointer to the current day
+        if(currentDate.getFullYear() === year && currentDate.getMonth() === month) {
+            cellsContainer.children[day + indexOfFirstDayCell].classList.add('current-day');
+        }
+    }
+
+    const buttons = document.querySelectorAll('.nav-row button');
+    buttons[0].addEventListener('click', () => onCalendarButtonClick(true));
+    buttons[1].addEventListener('click', () => onCalendarButtonClick(false));
     
-    document.querySelector('#save').addEventListener('click', _ => {
+    // list months in calendar
+    function onCalendarButtonClick(isLeft) {
+        currentMonth += isLeft ? -1 : 1;
+
+        showCalendar();
+        hideActiveElement('.event');
+        hideActiveElement('.form');
+    }
+
+    document.querySelector('#save').addEventListener('click', () => {
+        if(!lastCell) { return; }
+
         const eventName = document.querySelector('#eventName').value;
         localStorage.setItem(date, eventName);
-        lastCell.classList.add('hasEvent');
+        lastCell.classList.add('has-event');
         showEvent(eventName, date);
     });
 
-    function showEvent(event, date) {
+    document.querySelector('#change').addEventListener('click', () => {
+        hideActiveElement('.event');
+        const eventNameInput = document.querySelector('#eventName');
+        eventNameInput.value = localStorage.getItem(date);
+        
         const form = document.querySelector('.form');
-        form.classList.remove('active');
+        form.classList.add('active');
+    });
 
-        const eventDiv = document.querySelector('.event');
-        const eventTitle = document.querySelector('#title');
-        const eventDate = document.querySelector('#date');
+    document.querySelector('#delete').addEventListener('click', () => {
+        if(!lastCell) { return; }
 
-        eventDiv.classList.add('active');
-        eventTitle.innerText = event;
-        eventDate.innerText = date;
-    }
-    
-
-
-    function colorCells() {
-        for (let i = 0; i < lastDayOfMonth.getDate(); i++) {
-            const year = firstDayOfMonth.getFullYear();
-            const m = firstDayOfMonth.getMonth();
-            const date = `${year}-${m}-${i + 1}`;
-
-            
-            const event = localStorage.getItem(date);
-            if (event) {
-                const dayElement = daysContainer.children[i + 7 + ((firstDayOfMonth.getDay() + 6) % 7)];
-                dayElement.classList.add('hasEvent');
-            }
-            
-            
-            if (currentDate.getDate() === i + 1 && currentDate.getFullYear() === year && currentDate.getMonth() === m) {
-                daysContainer.children[i + 7 + ((firstDayOfMonth.getDay() + 6) % 7)].classList.add('currentDay');
-            }
-        }
-    }
-    
+        hideActiveElement('.event');
+        localStorage.removeItem(date);
+        lastCell.classList.remove('has-event'); 
+    });
 });

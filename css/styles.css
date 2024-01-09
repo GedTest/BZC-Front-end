@@ -1,0 +1,187 @@
+.form {
+  display: none;
+  width: 100%;
+  background-color: #388E3C;
+}
+.form div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5% 10%;
+}
+.form input {
+  max-width: 50%;
+  background-color: #C8E6C9;
+}
+.form label {
+  margin-right: 10px;
+  color: white;
+  text-wrap: nowrap;
+  font-size: 1.5rem;
+}
+.form button {
+  padding: 5% 10%;
+}
+.form.active {
+  display: block;
+}
+#calendar {
+  width: 25%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  width: 100%;
+}
+button {
+  background-color: #4CAF50;
+  color: white;
+  border-style: none;
+}
+.day,
+.header,
+.empty {
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  background-color: white;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.day:hover {
+  background-color: red;
+}
+.header {
+  color: #388E3C;
+  font-weight: 600;
+}
+.empty {
+  background-color: #C8E6C9;
+}
+.nav-row {
+  background-color: #388E3C;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 5% 0;
+}
+.nav-row #month-year {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  font-size: 2.3rem;
+}
+.nav-row button {
+  padding: 4% 5%;
+}
+.nav-row .left {
+  margin-left: 5%;
+}
+.nav-row .right {
+  margin-right: 5%;
+}
+.current-day {
+  border: 3px solid lightcoral;
+}
+@media (max-width: 1080px) {
+  #calendar {
+    width: 35%;
+  }
+  .nav-row #month-year {
+    font-size: 1.7rem;
+  }
+  .event #title,
+  .event #date,
+  .event button {
+    font-size: 1.4rem;
+  }
+}
+@media (max-width: 768px) {
+  #calendar {
+    width: 40%;
+  }
+}
+@media (max-width: 605px) {
+  #calendar {
+    width: 50%;
+  }
+  .nav-row #month-year {
+    font-size: 1.4rem;
+  }
+  .event #title,
+  .event #date {
+    font-size: 1.2rem;
+  }
+  .event button {
+    font-size: 0.6rem;
+  }
+  .form label {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 400px) {
+  #calendar {
+    width: 70%;
+  }
+  .event #title,
+  .event #date {
+    font-size: 1.1rem;
+  }
+  .form label {
+    font-size: 0.9rem;
+  }
+}
+.event {
+  display: none;
+  width: 100%;
+  background-color: #388E3C;
+  color: white;
+}
+.event #title {
+  margin: 0 0 0 10%;
+  font-size: 1.6rem;
+  font-weight: 400;
+  padding: 5% 0;
+  overflow-y: auto;
+  max-height: 2rem;
+  word-wrap: break-word;
+}
+.event #title::-webkit-scrollbar {
+  width: 1rem;
+}
+.event #title::-webkit-scrollbar-track {
+  background-color: #388E3C;
+}
+.event #title::-webkit-scrollbar-thumb {
+  background-color: #4CAF50;
+}
+.event #title::-webkit-scrollbar-thumb:hover {
+  background-color: #C8E6C9;
+}
+.event #date {
+  margin: 3% 0 3% 10%;
+  font-size: 1.6rem;
+}
+.event.active {
+  display: flex;
+  flex-direction: column;
+}
+.event.active div {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 5% 10%;
+}
+.event.active button {
+  font-size: 1rem;
+  padding: 5% 10%;
+}
+.has-event {
+  background-color: #4CAF50;
+}

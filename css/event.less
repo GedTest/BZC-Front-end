@@ -1,0 +1,60 @@
+@import './constants';
+
+
+.event {
+    display: none;
+    width: 100%;
+    background-color: @darkprimary;
+    color: white;
+
+    #title {
+        margin: 0 0 0 10%;
+        font-size: 1.6rem;
+        font-weight: 400;
+        padding: 5% 0;
+        overflow-y: auto;
+        max-height: 2rem;
+        word-wrap: break-word;
+
+        &::-webkit-scrollbar {
+            width: 1rem;
+        }
+
+        &::-webkit-scrollbar-track {
+            background-color: @darkprimary;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: @primary;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            background-color: @lightprimary;
+        }
+    }
+
+    #date {
+        margin: 3% 0 3% 10%;
+        font-size: 1.6rem;
+    }
+
+    &.active {
+        display: flex;
+        flex-direction: column;
+
+        div {
+            display: flex;
+            justify-content: space-evenly;
+            padding: 5% 10%;
+        }
+
+        button {
+            font-size: 1rem;
+            padding: 5% 10%;
+        }
+    }
+}
+
+.has-event {
+    background-color: @primary;
+}

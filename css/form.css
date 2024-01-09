@@ -1,0 +1,27 @@
+.form {
+  display: none;
+  width: 100%;
+  background-color: #388E3C;
+}
+.form div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5% 10%;
+}
+.form input {
+  max-width: 50%;
+  background-color: #C8E6C9;
+}
+.form label {
+  margin-right: 10px;
+  color: white;
+  text-wrap: nowrap;
+  font-size: 1.5rem;
+}
+.form button {
+  padding: 5% 10%;
+}
+.form.active {
+  display: block;
+}
