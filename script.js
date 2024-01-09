@@ -1,3 +1,8 @@
+/*
+ *   Author: Viktor Zwinger
+ *   Date: Jan 09 2024
+ */
+
 document.addEventListener('DOMContentLoaded', () => {    
     const cellsContainer = document.querySelector('.container');
     const currentDate = new Date();
