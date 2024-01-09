@@ -1,3 +1,47 @@
+.event {
+  display: none;
+  width: 100%;
+  background-color: #388E3C;
+  color: white;
+}
+.event #title {
+  margin: 0 0 0 10%;
+  font-size: 1.6rem;
+  font-weight: 400;
+  padding: 5% 0;
+  overflow-y: auto;
+  max-height: 2rem;
+  word-wrap: break-word;
+}
+.event #title::-webkit-scrollbar {
+  width: 1rem;
+}
+.event #title::-webkit-scrollbar-track {
+  background-color: #388E3C;
+}
+.event #title::-webkit-scrollbar-thumb {
+  background-color: #4CAF50;
+}
+.event #title::-webkit-scrollbar-thumb:hover {
+  background-color: #C8E6C9;
+}
+.event #date {
+  margin: 3% 0 3% 10%;
+  font-size: 1.6rem;
+}
+.event.active {
+  display: flex;
+  flex-direction: column;
+}
+.event.active div {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 5% 10%;
+}
+.event.active button {
+  font-size: 1rem;
+  padding: 5% 10%;
+}
 .form {
   display: none;
   width: 100%;
@@ -25,6 +69,9 @@
 .form.active {
   display: block;
 }
+body {
+  background-color: #eaf1ea;
+}
 #calendar {
   width: 25%;
   margin: 0 auto;
@@ -41,6 +88,9 @@ button {
   background-color: #4CAF50;
   color: white;
   border-style: none;
+}
+button:hover {
+  background-color: #C8E6C9;
 }
 .day,
 .header,
@@ -86,6 +136,9 @@ button {
 }
 .nav-row .right {
   margin-right: 5%;
+}
+.has-event {
+  background-color: #4CAF50;
 }
 .current-day {
   border: 3px solid lightcoral;
@@ -137,51 +190,4 @@ button {
   .form label {
     font-size: 0.9rem;
   }
-}
-.event {
-  display: none;
-  width: 100%;
-  background-color: #388E3C;
-  color: white;
-}
-.event #title {
-  margin: 0 0 0 10%;
-  font-size: 1.6rem;
-  font-weight: 400;
-  padding: 5% 0;
-  overflow-y: auto;
-  max-height: 2rem;
-  word-wrap: break-word;
-}
-.event #title::-webkit-scrollbar {
-  width: 1rem;
-}
-.event #title::-webkit-scrollbar-track {
-  background-color: #388E3C;
-}
-.event #title::-webkit-scrollbar-thumb {
-  background-color: #4CAF50;
-}
-.event #title::-webkit-scrollbar-thumb:hover {
-  background-color: #C8E6C9;
-}
-.event #date {
-  margin: 3% 0 3% 10%;
-  font-size: 1.6rem;
-}
-.event.active {
-  display: flex;
-  flex-direction: column;
-}
-.event.active div {
-  display: flex;
-  justify-content: space-evenly;
-  padding: 5% 10%;
-}
-.event.active button {
-  font-size: 1rem;
-  padding: 5% 10%;
-}
-.has-event {
-  background-color: #4CAF50;
 }

@@ -103,10 +103,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showEvent(event, date) {
         hideActiveElement('.form');
-
+        
         document.querySelector('.event').classList.add('active');
         document.querySelector('#title').innerText = event;
         document.querySelector('#date').innerText = formatDate(date);
+
+        makeEffectOn(document.querySelector('.event'), 'animate__fadeInDown', 0.4);
     }
 
     function hideActiveElement(element) {
@@ -136,6 +138,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         form.classList.add('active');
         document.querySelector('#eventName').value = '';
+
+        makeEffectOn(document.querySelector('.form'), 'animate__fadeInDown', 0.4);
     }
 
     function colorCells() {
@@ -170,10 +174,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // list months in calendar
     function onCalendarButtonClick(isLeft) {
         currentMonth += isLeft ? -1 : 1;
+        let directionClass = isLeft ? 'animate__fadeInLeft' : 'animate__fadeInRight';
+
+        const object = document.querySelector('#calendar');
+        object.style.animationDuration = '0.5s';
+        object.classList.remove('animate__fadeInLeft', 'animate__fadeInRight');
+        void object.offsetWidth;
+        object.classList.add(directionClass);
+        
 
         showCalendar();
         hideActiveElement('.event');
         hideActiveElement('.form');
+    }
+
+    function makeEffectOn(object, effect, duration) {
+        object.style.animationDuration = `${duration}s`;
+        object.classList.remove(effect);
+        void object.offsetWidth;
+        object.classList.add(effect);
     }
 
     document.querySelector('#save').addEventListener('click', () => {
