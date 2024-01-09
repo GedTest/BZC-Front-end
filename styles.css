@@ -1,11 +1,15 @@
+:root {
+    --primary: #4CAF50;
+    --darkprimary: #388E3C;
+    --lightprimary: #C8E6C9;
+}
+
 #calendar {
-    width: 35vw;
+    width: 30vw;
     margin: 0 auto; 
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    border: 3px solid beige;
 }
 
 .container {
@@ -14,9 +18,16 @@
     width: 100%;
 }
 
+button {
+    background-color: var(--primary);
+    color: white;
+    border-style: none;
+}
+
 .day, .header, .empty {
     box-sizing: border-box;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
+    background-color: white;
     aspect-ratio: 1;
     
     display: flex;
@@ -29,29 +40,34 @@
 }
 
 .header {
-    background-color: gray;
+    color: var(--darkprimary);
+    font-weight: 600;
 }
 
 .empty {
-    background-color: #eee;
+    background-color: var(--lightprimary);
 }
 
-.row {
+.nav-row {
+    background-color: var(--darkprimary);;
+    color: white;
     display: flex;
     width: 100%;
+    padding: 5% 0;
 }
 
-.row #monthYear {
+.nav-row #monthYear {
     flex-grow: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 10%;
+    padding: 0 5%;
     white-space: nowrap;
+    font-size: 1.5rem;
 }
 
-.row button {
-    padding: 2% 4%;
+.nav-row button {
+    padding: 4% 5%;
 }
 
 .left {
@@ -62,15 +78,65 @@
 }
 
 .event {
+    display: none;
     width: 100%;
-    background-color: green;
+    background-color: var(--primary);
+    color: white;
+}
+
+.event #title {
+    margin: 0 0 0 10%;
+    font-size: 2rem;
+    padding: 5% 0;
+}
+
+.event #date {
+    margin: 0 0 0 10%;
+    font-size: 1.2rem;
+    padding-bottom: 7%;
+}
+
+.form.active {
+    display: block;
 }
 
 .form {
     display: none;
+    width: 100%;
+    background-color: var(--lightprimary);
 }
 
-.day.event {
-    background-color: green;
+.form div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10%;
+    padding: 0 10%;
 }
 
+.form input {
+    max-width: 50%;
+}
+
+.form label {
+    margin-right: 10px;
+    color: black;
+    text-wrap: nowrap;
+}
+
+.form button {
+    padding: 5% 10%;
+}
+
+.hasEvent {
+    background-color: var(--primary);
+}
+
+.event.active {
+    display: flex;
+    flex-direction: column;
+}
+
+.currentDay {
+    border: 3px solid lightcoral;
+}

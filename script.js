@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {    
-    const calendar = document.querySelector('#calendar');
     const daysContainer = document.querySelector('.container');
     let currentDate = new Date();
     
-    let currentMonth = 11;
+    let currentMonth = currentDate.getMonth();
 
 
     let lastDayOfMonth = 1;
@@ -87,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(isLeft) { currentMonth--; }
         else { currentMonth++; }
         showCalendar();
+        hideEvent();
     }
 
 
@@ -94,50 +94,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-
-    let dayCell = null;
+    //==========
+    let lastCell = null;
+    let date = null;
+    //==========
     function onCellClick() {
-        
         const day = this.innerText;
         const year = firstDayOfMonth.getFullYear();
         const month = firstDayOfMonth.getMonth();
-        const date = `${year}-${month}-${day}`;
+        date = `${year}-${month}-${day}`;
         
         const event = localStorage.getItem(date);
         
         if (event) {
-            showEvent();            
+            showEvent(event, date);            
         }
         else {
-            showForm();
-            dayCell = this;
+            showForm(this);
         }
         
     }
 
-    function showForm() {
-        const form = document.querySelector('.form');
-        form.style.display = (form.style.display === 'block' && dayCell === this) ? '' : 'block';
-
-
-        document.querySelector('#save').addEventListener('click', _ => {
-            const eventNameInput = document.querySelector('#eventName');
-            const eventName = eventNameInput.value;
-            localStorage.setItem(date, eventName);
-
-            dayCell.classList.add('event');
-        });
+    function hideEvent() {
+        const eventDiv = document.querySelector('.event');
+        eventDiv.classList.remove('active');
     }
 
-    function showEvent() {
+    function showForm(cell) {
+        const form = document.querySelector('.form');
+        hideEvent();
+
+        if(cell === lastCell) {
+            if(form.classList.contains('active')) {
+                form.classList.remove('active');
+            } else {
+                form.classList.add('active');
+            }
+        } else {
+            lastCell = cell;
+            form.classList.add('active');
+            document.querySelector('#eventName').value = '';
+        }
+        
+    }
+    
+    document.querySelector('#save').addEventListener('click', _ => {
+        const eventName = document.querySelector('#eventName').value;
+        localStorage.setItem(date, eventName);
+        lastCell.classList.add('hasEvent');
+        showEvent(eventName, date);
+    });
+
+    function showEvent(event, date) {
+        const form = document.querySelector('.form');
+        form.classList.remove('active');
+
         const eventDiv = document.querySelector('.event');
         const eventTitle = document.querySelector('#title');
         const eventDate = document.querySelector('#date');
-
-        eventDiv.classList.remove('active');
-        eventTitle.innerText = '';
-        eventDate.innerText = '';
 
         eventDiv.classList.add('active');
         eventTitle.innerText = event;
@@ -156,7 +170,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const event = localStorage.getItem(date);
             if (event) {
                 const dayElement = daysContainer.children[i + 7 + ((firstDayOfMonth.getDay() + 6) % 7)];
-                dayElement.classList.add('event');
+                dayElement.classList.add('hasEvent');
+            }
+            
+            
+            if (currentDate.getDate() === i + 1 && currentDate.getFullYear() === year && currentDate.getMonth() === m) {
+                daysContainer.children[i + 7 + ((firstDayOfMonth.getDay() + 6) % 7)].classList.add('currentDay');
             }
         }
     }

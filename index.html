@@ -8,22 +8,27 @@
 </head>
 <body>
     <div id="calendar">
-        <div class="row">
+        <div class="nav-row">
             <button class="left"><</button>
             <div id="monthYear"></div>
             <button class="right">></button>
         </div>
         <div class="container"></div>
+
         <div class="event">
             <h4 id="title"></h4>
             <p id="date"></p>
         </div>
 
         <div class="form">
-            <label for="eventName">Název akce:</label>
-            <input type="text" id="eventName" name="eventName">
-            <button id="save">Uložit</button>
-            <button id="delete">Odstranit</button>
+            <div>
+                <label for="eventName">Název akce:</label>
+                <input type="text" id="eventName" name="eventName">
+            </div>
+            <div>
+                <button id="save">Uložit</button>
+                <button id="delete">Odstranit</button>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>
